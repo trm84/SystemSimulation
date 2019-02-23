@@ -16,12 +16,12 @@ D = [0];
 %PART A
 %Vout / Vin
 B = [S/L; 0]
-[NUM,DEN] = ss2tf(A,B,C,D)
+[NUM,DEN] = ss2tf(A,B,C,D);
 TF = tf(NUM,DEN)
 
 %Vout / S
 B = [Vin/L; 0]
-[NUM,DEN] = ss2tf(A,B,C,D)
+[NUM,DEN] = ss2tf(A,B,C,D);
 TF = tf(NUM,DEN)
 
 POLES = pole(TF) %Only run this once because the poles do not change with a change in B
