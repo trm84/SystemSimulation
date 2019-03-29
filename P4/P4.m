@@ -43,7 +43,7 @@ f = zeros(2, N);
 %LOW
 j = mod(0:N-1, 100);
 temp = find(j>40);
-j(temp) = 0; 
+j(temp) = 0;
 %HIGH
 temp = find(j);
 j(temp) = 1;
@@ -64,4 +64,3 @@ plot(t,y);
 title('Buck Converter');
 xlabel('t');
 ylabel('v');
-
