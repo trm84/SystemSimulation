@@ -21,9 +21,9 @@ Nt=21;
 Nr=12;
 
 theta=linspace(0,2*pi,1001); 
-rho=linspace(0,0.5256,1001); 
+rho=linspace(0.6192,1,1001); 
 tvec=linspace(0,2*pi,Nt);
-rvec=linspace(0,0.5256,Nr);
+rvec=linspace(0.6192,1,Nr);
 
 temp = (roots(den - num*0.5748));
 mag = abs(temp)
@@ -47,7 +47,7 @@ for k=1:length(tvec)-1
 end
 
 grid on
-axis([-1.25 0.75 -0.6 0.6])
+axis([-1.5 0.1 -1 1])
 title('Primary Domain')
 % TESTING TO FIND INTERSECTION POINT -> Intersection at 0.5748
 
@@ -86,13 +86,9 @@ Nt=21;
 Nr=12;
 
 theta=linspace(0,2*pi,1001); 
-rho=linspace(0.6192,1,1001); 
+rho=linspace(0,0.5256,1001); 
 tvec=linspace(0,2*pi,Nt);
-rvec=linspace(0.6192,1,Nr);
-
-temp = (roots(den - num*0.6192));
-mag = abs(temp)
-ang = angle(temp)
+rvec=linspace(0,0.5256,Nr);
 
 for k=1:length(rvec)
  z=rvec(k)*exp(i*theta);
@@ -112,7 +108,7 @@ for k=1:length(tvec)-1
 end
 
 grid on
-axis([-1.5 0.1 -1 1])
+axis([-1.25 0.75 -0.6 0.6])
 title('Secondary Domain')
 
 % TESTING TO FIND INTERSECTION POINT -> Intersection at 0.6192
@@ -131,6 +127,43 @@ title('Secondary Domain')
 % end
 
 %% PART E -- Stability Region
-disp('Stable and Accurate Region is inside of the green outlining edge, to the right of primary region plot''s origin (-0.61, 0)')
-disp('Stable and Inaccurate Region is inside of the green outlining edge, to the left of primary region plot''s origin (-0.61, 0)')
+disp('Stable and Accurate Region is inside of the green outlining edge, to the right of the black line in Figure 3')
+disp('Stable and Inaccurate Region is inside of the green outlining edge, to the left of the black line in Figure 3')
 disp('Unstable and Inaccurate Region is outside of the green outlining edge on the primary region plot')
+
+
+figure;
+
+Nt=21;
+Nr=12;
+
+theta=linspace(0,2*pi,1001); 
+rho=linspace(0.6192,1,1001); 
+tvec=linspace(0,2*pi,Nt);
+rvec=linspace(0.6192,1,Nr);
+
+for k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+ 
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+for k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+hold on
+    plot([-0.5 -0.5], [-1 1], 'black') 
+hold off
+
+
+grid on
+axis([-1.5 0.1 -1 1])
+title('Primary Domain')

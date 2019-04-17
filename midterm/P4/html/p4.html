@@ -1,0 +1,506 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>p4</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-04"><meta name="DC.source" content="p4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">PART C</a></li><li><a href="#3">PART D</a></li><li><a href="#4">PART E</a></li></ul></div><pre class="codeinput"><span class="comment">%Tyler Matthews</span>
+<span class="comment">%System Simluation Midterm P4</span>
+clc; close <span class="string">all</span>; <span class="comment">%Clear console and close figures</span>
+</pre><h2 id="2">PART C</h2><pre class="codeinput">Nt=21;
+Nr=12;
+
+num = [0.46 0.29 -0.32]
+den = [1 -1.56 0.56]
+
+Hp = tf(num, den)
+zeros = roots(num)
+poles = roots(den)
+
+Phi = tf(den, num) <span class="comment">%(sigma / roe) : (row - l*sigma)</span>
+
+newNum = [10076 -11552 3368]
+badPoints = roots(newNum)
+magnitude = abs(badPoints)
+
+theta=linspace(0,2*pi,1001);
+rho=linspace(0.595,1,1001);
+tvec=linspace(0,2*pi,Nt);
+rvec=linspace(0.595,1,Nr);
+
+temp = (roots(den - num*0.5764));
+mag = abs(temp)
+ang = angle(temp)
+
+<span class="keyword">for</span> k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w))
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w))
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+grid <span class="string">on</span>
+axis([-25 2.5 -15 15])
+title(<span class="string">'Primary Domain Stability Plot'</span>)
+
+<span class="comment">%TESTING FOR INTERSECTION POINT</span>
+<span class="comment">% for N=1:10</span>
+<span class="comment">%     temp =  0.579 - N*0.0001</span>
+<span class="comment">%     val = sprintf('N = %0.5f',temp);</span>
+<span class="comment">%     z = (temp) * exp(i*theta);</span>
+<span class="comment">%     w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);</span>
+<span class="comment">%     plot(real(w), imag(w));</span>
+<span class="comment">%     title(val);</span>
+<span class="comment">%     disp(val);</span>
+<span class="comment">%     disp(w(1));</span>
+<span class="comment">%     disp(w(2));</span>
+<span class="comment">%     pause;</span>
+<span class="comment">% end</span>
+</pre><pre class="codeoutput">
+num =
+
+    0.4600    0.2900   -0.3200
+
+
+den =
+
+    1.0000   -1.5600    0.5600
+
+
+Hp =
+ 
+  0.46 s^2 + 0.29 s - 0.32
+  ------------------------
+    s^2 - 1.56 s + 0.56
+ 
+Continuous-time transfer function.
+
+
+zeros =
+
+   -1.2069
+    0.5764
+
+
+poles =
+
+    1.0000
+    0.5600
+
+
+Phi =
+ 
+    s^2 - 1.56 s + 0.56
+  ------------------------
+  0.46 s^2 + 0.29 s - 0.32
+ 
+Continuous-time transfer function.
+
+
+newNum =
+
+       10076      -11552        3368
+
+
+badPoints =
+
+   0.5732 + 0.0752i
+   0.5732 - 0.0752i
+
+
+magnitude =
+
+    0.5782
+    0.5782
+
+
+mag =
+
+    1.7818
+    0.5686
+
+
+ang =
+
+     0
+     0
+
+</pre><img vspace="5" hspace="5" src="p4_01.png" alt=""> <h2 id="3">PART D</h2><pre class="codeinput"><span class="comment">%Getting an actual value for T using the state-space representation in</span>
+<span class="comment">%problem 03</span>
+
+A = [-4.7, -1.55, -0.55; 0.3, -2.75, -0.35; 1.1, 1.85, -2.55]
+B = [1; 0; -1]
+C = [2, 1, 1]
+D = [0]
+
+lamda = eig(A)
+
+figure;
+
+<span class="keyword">for</span> k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w))
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w))
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+axis([-6 2.5 -2.5 2.5])
+title(<span class="string">'Primary Domain with Lamda-T Products'</span>)
+T = linspace(0,2,1001);
+
+hold <span class="string">on</span>
+plot(real(lamda(1)*T), imag(lamda(1)*T))
+plot(real(lamda(2)*T), imag(lamda(2)*T))
+plot(real(lamda(3)*T), imag(lamda(3)*T))
+hold <span class="string">off</span>
+
+disp(<span class="string">'Stable, and accurate, values for T would be located inside of the green incompassing line and to the right of the black line in Figure 2'</span>)
+disp(<span class="string">"Using lamda-T products from Problem 3, this would give us T = 0.1 -&gt; Shown by the 'x's on Figure 2"</span>)
+
+stable_acc = 0.1;
+
+hold <span class="string">on</span>
+    plot([-0.5 -0.5], [-20 20], <span class="string">'black'</span>)
+hold <span class="string">off</span>
+
+hold <span class="string">on</span>
+    plot(real(stable_acc * lamda), imag(stable_acc * lamda), <span class="string">'x'</span>)
+hold <span class="string">off</span>
+</pre><pre class="codeoutput">
+A =
+
+   -4.7000   -1.5500   -0.5500
+    0.3000   -2.7500   -0.3500
+    1.1000    1.8500   -2.5500
+
+
+B =
+
+     1
+     0
+    -1
+
+
+C =
+
+     2     1     1
+
+
+D =
+
+     0
+
+
+lamda =
+
+  -4.0000 + 0.0000i
+  -3.0000 + 0.8000i
+  -3.0000 - 0.8000i
+
+Stable, and accurate, values for T would be located inside of the green incompassing line and to the right of the black line in Figure 2
+Using lamda-T products from Problem 3, this would give us T = 0.1 -&gt; Shown by the 'x's on Figure 2
+</pre><img vspace="5" hspace="5" src="p4_02.png" alt=""> <h2 id="4">PART E</h2><pre class="codeinput">figure;
+
+<span class="comment">%Corrector Plot</span>
+<span class="keyword">for</span> k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w), <span class="string">'r'</span>)
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w), <span class="string">'r'</span>)
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+theta=linspace(0,2*pi,1001);
+rho=linspace(0.6192,1,1001);
+tvec=linspace(0,2*pi,Nt);
+rvec=linspace(0.6192,1,Nr);
+
+<span class="comment">%Predictor Plot</span>
+<span class="keyword">for</span> k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+
+ hold <span class="string">on</span>
+ plot(real(w), imag(w), <span class="string">'b'</span>)
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+ hold <span class="string">on</span>
+ plot(real(w), imag(w), <span class="string">'b'</span>)
+ hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+
+grid <span class="string">on</span>
+axis([-3 1 -1.5 1.5])
+title(<span class="string">'Corrector and Predictor Stability Plots'</span>)
+
+disp(<span class="string">' '</span>)
+disp(<span class="string">'Stability plot for the predictor is in blue and the stability plot for corrector is in red'</span>)
+disp(<span class="string">'You can see that the plots are similiar, but the corrector plot is much larger'</span>)
+</pre><pre class="codeoutput"> 
+Stability plot for the predictor is in blue and the stability plot for corrector is in red
+You can see that the plots are similiar, but the corrector plot is much larger
+</pre><img vspace="5" hspace="5" src="p4_03.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Tyler Matthews
+%System Simluation Midterm P4
+clc; close all; %Clear console and close figures
+
+%% PART C
+Nt=21;
+Nr=12;
+
+num = [0.46 0.29 -0.32]
+den = [1 -1.56 0.56]
+
+Hp = tf(num, den)
+zeros = roots(num)
+poles = roots(den)
+
+Phi = tf(den, num) %(sigma / roe) : (row - l*sigma)
+
+newNum = [10076 -11552 3368]
+badPoints = roots(newNum)
+magnitude = abs(badPoints)
+
+theta=linspace(0,2*pi,1001); 
+rho=linspace(0.595,1,1001); 
+tvec=linspace(0,2*pi,Nt);
+rvec=linspace(0.595,1,Nr);
+
+temp = (roots(den - num*0.5764));
+mag = abs(temp)
+ang = angle(temp)
+
+for k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+for k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+grid on
+axis([-25 2.5 -15 15])
+title('Primary Domain Stability Plot')
+
+%TESTING FOR INTERSECTION POINT
+% for N=1:10
+%     temp =  0.579 - N*0.0001
+%     val = sprintf('N = %0.5f',temp);
+%     z = (temp) * exp(i*theta);
+%     w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+%     plot(real(w), imag(w));
+%     title(val);
+%     disp(val);
+%     disp(w(1));
+%     disp(w(2));
+%     pause;
+% end
+
+%% PART D
+%Getting an actual value for T using the state-space representation in
+%problem 03
+
+A = [-4.7, -1.55, -0.55; 0.3, -2.75, -0.35; 1.1, 1.85, -2.55]
+B = [1; 0; -1]
+C = [2, 1, 1]
+D = [0]
+
+lamda = eig(A)
+
+figure;
+
+for k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+for k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w))
+ hold off
+end
+
+axis([-6 2.5 -2.5 2.5])
+title('Primary Domain with Lamda-T Products')
+T = linspace(0,2,1001);
+
+hold on
+plot(real(lamda(1)*T), imag(lamda(1)*T))
+plot(real(lamda(2)*T), imag(lamda(2)*T))
+plot(real(lamda(3)*T), imag(lamda(3)*T))
+hold off
+
+disp('Stable, and accurate, values for T would be located inside of the green incompassing line and to the right of the black line in Figure 2')
+disp("Using lamda-T products from Problem 3, this would give us T = 0.1 -> Shown by the 'x's on Figure 2")
+
+stable_acc = 0.1;
+
+hold on
+    plot([-0.5 -0.5], [-20 20], 'black') 
+hold off
+
+hold on
+    plot(real(stable_acc * lamda), imag(stable_acc * lamda), 'x')
+hold off
+
+%% PART E
+figure;
+
+%Corrector Plot
+for k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w), 'r')
+ hold off
+end
+
+for k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
+ hold on
+ plot(real(w), imag(w), 'r')
+ hold off
+end
+
+theta=linspace(0,2*pi,1001); 
+rho=linspace(0.6192,1,1001); 
+tvec=linspace(0,2*pi,Nt);
+rvec=linspace(0.6192,1,Nr);
+
+%Predictor Plot
+for k=1:length(rvec)
+ z=rvec(k)*exp(i*theta);
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+ 
+ hold on
+ plot(real(w), imag(w), 'b')
+ hold off
+end
+
+for k=1:length(tvec)-1
+ z=rho*exp(i*tvec(k));
+ w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
+ hold on
+ plot(real(w), imag(w), 'b')
+ hold off
+end
+
+
+grid on
+axis([-3 1 -1.5 1.5])
+title('Corrector and Predictor Stability Plots')
+
+disp(' ')
+disp('Stability plot for the predictor is in blue and the stability plot for corrector is in red')
+disp('You can see that the plots are similiar, but the corrector plot is much larger')
+
+##### SOURCE END #####
+--></body></html>

@@ -2,10 +2,6 @@
 %System Simluation Midterm P4
 clc; close all; %Clear console and close figures
 
-
-%% PART A
-disp('Corrector is fourth order accurate because up to C3 in Lambert''s equations are equal to 0');
-
 %% PART C
 Nt=21;
 Nr=12;
@@ -24,9 +20,9 @@ badPoints = roots(newNum)
 magnitude = abs(badPoints)
 
 theta=linspace(0,2*pi,1001); 
-rho=linspace(0,0.5686,1001); 
+rho=linspace(0.595,1,1001); 
 tvec=linspace(0,2*pi,Nt);
-rvec=linspace(0,0.5686,Nr);
+rvec=linspace(0.595,1,Nr);
 
 temp = (roots(den - num*0.5764));
 mag = abs(temp)
@@ -49,12 +45,12 @@ for k=1:length(tvec)-1
 end
 
 grid on
-axis([-6 2.5 -2.5 2.5])
-title('Primary Domain')
+axis([-25 2.5 -15 15])
+title('Primary Domain Stability Plot')
 
 %TESTING FOR INTERSECTION POINT
 % for N=1:10
-%     temp =  0.568 + N*0.0001
+%     temp =  0.579 - N*0.0001
 %     val = sprintf('N = %0.5f',temp);
 %     z = (temp) * exp(i*theta);
 %     w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
@@ -105,13 +101,23 @@ plot(real(lamda(2)*T), imag(lamda(2)*T))
 plot(real(lamda(3)*T), imag(lamda(3)*T))
 hold off
 
-disp('Stable, and accurate, values for T would be located inside of the green incompassing line and to the right of the plot''s origin (-1.75, 0)')
-disp('The best points would be between -1 & -1.75 on the x-axis and between 1 & -1 on the y-axis')
-disp('Using lamda-T products from Problem 3, this would give us T = 0.23')
+disp('Stable, and accurate, values for T would be located inside of the green incompassing line and to the right of the black line in Figure 2')
+disp("Using lamda-T products from Problem 3, this would give us T = 0.1 -> Shown by the 'x's on Figure 2")
+
+stable_acc = 0.1;
+
+hold on
+    plot([-0.5 -0.5], [-20 20], 'black') 
+hold off
+
+hold on
+    plot(real(stable_acc * lamda), imag(stable_acc * lamda), 'x')
+hold off
 
 %% PART E
 figure;
 
+%Corrector Plot
 for k=1:length(rvec)
  z=rvec(k)*exp(i*theta);
  w = (z.^2-z.*1.56 + 0.56)./(z.^2.*0.46+z.*0.29-0.32);
@@ -129,11 +135,11 @@ for k=1:length(tvec)-1
 end
 
 theta=linspace(0,2*pi,1001); 
-rho=linspace(0,0.5256,1001); 
+rho=linspace(0.6192,1,1001); 
 tvec=linspace(0,2*pi,Nt);
-rvec=linspace(0,0.5256,Nr);
+rvec=linspace(0.6192,1,Nr);
 
-
+%Predictor Plot
 for k=1:length(rvec)
  z=rvec(k)*exp(i*theta);
  w=(z.^2-z.*1.45 + 0.45)./(z.*1.27-0.73);
@@ -153,9 +159,9 @@ end
 
 
 grid on
-axis([-6 2.5 -2.5 2.5])
+axis([-3 1 -1.5 1.5])
 title('Corrector and Predictor Stability Plots')
 
 disp(' ')
 disp('Stability plot for the predictor is in blue and the stability plot for corrector is in red')
-disp('You can see that the plots are similiar, but the corrector plot is much larger and shifted to the left')
+disp('You can see that the plots are similiar, but the corrector plot is much larger')
