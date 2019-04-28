@@ -1,0 +1,907 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P15</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-27"><meta name="DC.source" content="P15.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Part A</a></li><li><a href="#3">Part B</a></li><li><a href="#4">Part C</a></li></ul></div><pre class="codeinput"><span class="comment">%Tyler Matthews</span>
+<span class="comment">%P15</span>
+
+clc; close <span class="string">all</span>; clear <span class="string">all</span>; <span class="comment">%Clear console, clear workspace, and close figures</span>
+
+H = 100;
+</pre><h2 id="2">Part A</h2><pre class="codeinput">R0 = 0.5;
+
+<span class="comment">% Case 1</span>
+a1 = 0.3;
+b1 = 0.2;
+c1 = 0.5;
+d1 = 0.03302;
+e1 = 0.01;
+m01 = R0/((a1^2)*b1*c1*(1/e1)*(1/d1))
+
+<span class="comment">% Case 2</span>
+a2 = 0.1;
+b2 = 0.03;
+c2 = 0.275;
+d2 = 0.03304;
+e2 = 0.0035;
+m02 = R0/((a2^2)*b2*c2*(1/e2)*(1/d2))
+
+<span class="comment">% Case 3</span>
+a3 = 0.5;
+b3 = 0.4;
+c3 = 0.4;
+d3 = 0.1;
+e3 = 0.05;
+m03 = R0/((a3^2)*b3*c3*(1/e3)*(1/d3))
+</pre><pre class="codeoutput">
+m01 =
+
+    0.0183
+
+
+m02 =
+
+    0.7008
+
+
+m03 =
+
+    0.0625
+
+</pre><h2 id="3">Part B</h2><pre class="codeinput">T = 0.0001;
+t0plot = 10;
+tfinal = 250;
+t = 0:T:tfinal;
+k0 = 1+floor(t0plot/T);
+N = length(t);
+
+<span class="comment">% For m &lt; m0</span>
+<span class="comment">% Case 1</span>
+m1 = 0.001;
+V1 = m1*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+<span class="keyword">for</span> k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V1-i1(k))*(y1(k)/H) - d1*i1(k);
+
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V1-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+<span class="keyword">end</span>
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.001'</span>)
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.001'</span>)
+
+<span class="comment">% Case 2</span>
+m2 = 0.007;
+V2 = m2*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+<span class="keyword">for</span> k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V2-i2(k))*(y2(k)/H) - d1*i2(k);
+
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V2-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.007'</span>)
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.007'</span>)
+
+<span class="comment">% Case 3</span>
+m3 = 0.006;
+V3 = m3*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+<span class="keyword">for</span> k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V3-i3(k))*(y3(k)/H) - d1*i3(k);
+
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V3-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.006'</span>)
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.006'</span>)
+
+<span class="comment">% For m &gt; m0</span>
+<span class="comment">% Case 1</span>
+m11 = 0.02;
+V11 = m11*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+<span class="keyword">for</span> k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V11-i1(k))*(y1(k)/H) - d1*i1(k);
+
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V11-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+<span class="keyword">end</span>
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.02'</span>)
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.02'</span>)
+
+<span class="comment">% Case 2</span>
+m22 = 0.8;
+V22 = m22*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+<span class="keyword">for</span> k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V22-i2(k))*(y2(k)/H) - d1*i2(k);
+
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V22-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.8'</span>)
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.8'</span>)
+
+<span class="comment">% Case 3</span>
+m33 = 0.07;
+V33 = m33*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+<span class="keyword">for</span> k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V33-i3(k))*(y3(k)/H) - d1*i3(k);
+
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V33-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.07'</span>)
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.07'</span>)
+
+<span class="comment">% For m &gt;&gt; m0</span>
+<span class="comment">% Case 1</span>
+m11 = 0.1;
+V11 = m11*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+<span class="keyword">for</span> k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V11-i1(k))*(y1(k)/H) - d1*i1(k);
+
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V11-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+<span class="keyword">end</span>
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.1'</span>)
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.1'</span>)
+
+<span class="comment">% Case 2</span>
+m22 = 7;
+V22 = m22*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+<span class="keyword">for</span> k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V22-i2(k))*(y2(k)/H) - d1*i2(k);
+
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V22-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=7'</span>)
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=7'</span>)
+
+<span class="comment">% Case 3</span>
+m33 = 0.6;
+V33 = m33*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+<span class="keyword">for</span> k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V33-i3(k))*(y3(k)/H) - d1*i3(k);
+
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V33-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+<span class="keyword">end</span>
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'Y'</span>)
+title(<span class="string">'Infected Humans m=0.6'</span>)
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'I'</span>)
+title(<span class="string">'Infected Mosquitos m=0.6'</span>)
+</pre><img vspace="5" hspace="5" src="P15_01.png" alt=""> <img vspace="5" hspace="5" src="P15_02.png" alt=""> <img vspace="5" hspace="5" src="P15_03.png" alt=""> <h2 id="4">Part C</h2><pre class="codeinput">disp(<span class="string">'Case 1: The infection is very difficult to transmit beacuse all of the graphs in Figure 1 decay.'</span>)
+
+disp(<span class="string">'Case 2: The infection is relatively easy to transmit because it only decays when m&lt;m0 as can be seen in Figure 2.'</span>)
+
+disp(<span class="string">'Case 3: The infection can be transmitted easily because none of the graphs in Figure 3 decay.'</span>)
+</pre><pre class="codeoutput">Case 1: The infection is very difficult to transmit beacuse all of the graphs in Figure 1 decay.
+Case 2: The infection is relatively easy to transmit because it only decays when m&lt;m0 as can be seen in Figure 2.
+Case 3: The infection can be transmitted easily because none of the graphs in Figure 3 decay.
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Tyler Matthews
+%P15
+
+clc; close all; clear all; %Clear console, clear workspace, and close figures
+
+H = 100;
+
+%% Part A
+R0 = 0.5;
+
+% Case 1
+a1 = 0.3;
+b1 = 0.2;
+c1 = 0.5;
+d1 = 0.03302;
+e1 = 0.01;
+m01 = R0/((a1^2)*b1*c1*(1/e1)*(1/d1))
+
+% Case 2
+a2 = 0.1;
+b2 = 0.03;
+c2 = 0.275;
+d2 = 0.03304;
+e2 = 0.0035;
+m02 = R0/((a2^2)*b2*c2*(1/e2)*(1/d2))
+
+% Case 3
+a3 = 0.5;
+b3 = 0.4;
+c3 = 0.4;
+d3 = 0.1;
+e3 = 0.05;
+m03 = R0/((a3^2)*b3*c3*(1/e3)*(1/d3))
+
+%% Part B
+T = 0.0001;
+t0plot = 10;
+tfinal = 250;
+t = 0:T:tfinal;
+k0 = 1+floor(t0plot/T);
+N = length(t);
+
+% For m < m0
+% Case 1
+m1 = 0.001;
+V1 = m1*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+for k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V1-i1(k))*(y1(k)/H) - d1*i1(k);
+    
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+    
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V1-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+    
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+end
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.001')
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.001')
+
+% Case 2
+m2 = 0.007;
+V2 = m2*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+for k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V2-i2(k))*(y2(k)/H) - d1*i2(k);
+    
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+    
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V2-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+    
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+end
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.007')
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.007')
+
+% Case 3
+m3 = 0.006;
+V3 = m3*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+for k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V3-i3(k))*(y3(k)/H) - d1*i3(k);
+    
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+    
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V3-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+    
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+end
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.006')
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.006')
+
+% For m > m0
+% Case 1
+m11 = 0.02;
+V11 = m11*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+for k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V11-i1(k))*(y1(k)/H) - d1*i1(k);
+    
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+    
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V11-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+    
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+end
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.02')
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.02')
+
+% Case 2
+m22 = 0.8;
+V22 = m22*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+for k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V22-i2(k))*(y2(k)/H) - d1*i2(k);
+    
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+    
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V22-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+    
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+end
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.8')
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.8')
+
+% Case 3
+m33 = 0.07;
+V33 = m33*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+for k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V33-i3(k))*(y3(k)/H) - d1*i3(k);
+    
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+    
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V33-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+    
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+end
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.07')
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.07')
+
+% For m >> m0
+% Case 1
+m11 = 0.1;
+V11 = m11*H;
+
+y1 = ones(1,N);
+i1 = ones(1,N);
+y11 = y1;
+i21 = i1;
+y12 = y1;
+i22 = i1;
+f11 = ones(1,N);
+f21 = ones(1,N);
+f12 = f11;
+f22 = f21;
+
+for k=1:N-1
+    f11(k+1) = a1*b1*i1(k)*((H-y1(k))/H) - e1*y1(k);
+    f21(k+1) = a1*c1*(V11-i1(k))*(y1(k)/H) - d1*i1(k);
+    
+    y11(k+1) = y1(k) + 0.5*T*f11(k+1);
+    i21(k+1) = i1(k) + 0.5*T*f21(k+1);
+    
+    f12(k+1) = a1*b1*i21(k+1)*((H-y11(k+1))/H) - e1*y11(k+1);
+    f22(k+1) = a1*c1*(V11-i21(k+1))*(y11(k+1)/H) - d1*i21(k+1);
+    
+    y1(k+1) = y1(k) + T*f12(k+1);
+    i1(k+1) = i1(k) + T*f22(k+1);
+end
+
+figure;
+subplot(2,3,1)
+plot(t,y1)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.1')
+
+subplot(2,3,4)
+plot(t,i1)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.1')
+
+% Case 2
+m22 = 7;
+V22 = m22*H;
+
+y2 = ones(1,N);
+i2 = ones(1,N);
+y31 = y2;
+i41 = i2;
+f31 = ones(1,N);
+f41 = ones(1,N);
+f32 = f31;
+f42 = f41;
+
+for k=1:N-1
+    f31(k+1) = a1*b1*i2(k)*((H-y2(k))/H) - e1*y2(k);
+    f41(k+1) = a1*c1*(V22-i2(k))*(y2(k)/H) - d1*i2(k);
+    
+    y31(k+1) = y2(k) + 0.5*T*f31(k+1);
+    i41(k+1) = i2(k) + 0.5*T*f41(k+1);
+    
+    f32(k+1) = a1*b1*i41(k+1)*((H-y31(k+1))/H) - e1*y31(k+1);
+    f42(k+1) = a1*c1*(V22-i41(k+1))*(y31(k+1)/H) - d1*i41(k+1);
+    
+    y2(k+1) = y2(k) + T*f32(k+1);
+    i2(k+1) = i2(k) + T*f42(k+1);
+end
+
+subplot(2,3,2)
+plot(t,y2)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=7')
+
+subplot(2,3,5)
+plot(t,i2)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=7')
+
+% Case 3
+m33 = 0.6;
+V33 = m33*H;
+
+y3 = ones(1,N);
+i3 = ones(1,N);
+y51 = y3;
+i61 = i3;
+f51 = ones(1,N);
+f61 = ones(1,N);
+f52 = f51;
+f62 = f61;
+
+for k=1:N-1
+    f51(k+1) = a1*b1*i3(k)*((H-y3(k))/H) - e1*y3(k);
+    f61(k+1) = a1*c1*(V33-i3(k))*(y3(k)/H) - d1*i3(k);
+    
+    y51(k+1) = y3(k) + 0.5*T*f51(k+1);
+    i61(k+1) = i3(k) + 0.5*T*f61(k+1);
+    
+    f52(k+1) = a1*b1*i61(k+1)*((H-y51(k+1))/H) - e1*y51(k+1);
+    f62(k+1) = a1*c1*(V33-i61(k+1))*(y51(k+1)/H) - d1*i61(k+1);
+    
+    y3(k+1) = y3(k) + T*f52(k+1);
+    i3(k+1) = i3(k) + T*f62(k+1);
+end
+
+subplot(2,3,3)
+plot(t,y3)
+xlabel('t')
+ylabel('Y')
+title('Infected Humans m=0.6')
+
+subplot(2,3,6)
+plot(t,i3)
+xlabel('t')
+ylabel('I')
+title('Infected Mosquitos m=0.6')
+
+%% Part C
+disp('Case 1: The infection is very difficult to transmit beacuse all of the graphs in Figure 1 decay.')
+
+disp('Case 2: The infection is relatively easy to transmit because it only decays when m<m0 as can be seen in Figure 2.')
+
+disp('Case 3: The infection can be transmitted easily because none of the graphs in Figure 3 decay.')
+
+##### SOURCE END #####
+--></body></html>

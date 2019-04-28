@@ -1,0 +1,453 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P18</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-27"><meta name="DC.source" content="P18.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Part A</a></li><li><a href="#3">Part B</a></li><li><a href="#4">Part C</a></li><li><a href="#5">Part D</a></li><li><a href="#6">Part E</a></li><li><a href="#7">Part F</a></li></ul></div><pre class="codeinput"><span class="comment">%Tyler Matthews</span>
+<span class="comment">%P18</span>
+
+clc; close <span class="string">all</span>; clear <span class="string">all</span>; <span class="comment">%Clear console, clear workspace, close figures</span>
+
+A = [-244*10^-6 -1668 1.667 -8.332; 0 -321 320 -1679; 0 79 -80 -79; 0 -320 320 -1680];
+B = [8;3;7;2];
+x0 = [1;1;1;1];
+</pre><h2 id="2">Part A</h2><pre class="codeinput">eigen = eig(A)
+disp(<span class="string">'Stiffness Ratio = 2000'</span>)
+</pre><pre class="codeoutput">
+eigen =
+
+   1.0e+03 *
+
+   -0.0000
+   -2.0000
+   -0.0010
+   -0.0800
+
+Stiffness Ratio = 2000
+</pre><h2 id="3">Part B</h2><pre class="codeinput">T = 0.02;
+tfinal = 5;
+t = [0:T:tfinal];
+N = length(t);
+
+LT = eigen(2)*T;
+Am = [0 1 0 -LT; 1 0 -LT 0; 1 1 0 0; 0 1 -1 -1];
+Bm = [-exp(LT);0;-1;-2];
+Xm = inv(Am)*Bm;
+a0 = Xm(1)
+a1 = Xm(2)
+b0 = Xm(3)
+b1 = Xm(4)
+srpstr=[<span class="string">'SRP-2-'</span>,num2str(abs(LT))];
+tstr=[<span class="string">'Simulation using '</span>,srpstr,<span class="string">' and T='</span>,num2str(T)];
+</pre><pre class="codeoutput">
+a0 =
+
+    0.9750
+
+
+a1 =
+
+   -1.9750
+
+
+b0 =
+
+   -0.0244
+
+
+b1 =
+
+    0.0494
+
+</pre><h2 id="4">Part C</h2><pre class="codeinput">theta=linspace(0,2*pi,1001);
+z = 1*exp(theta*i);
+w = (z.^2 + a1*z +a0)./(b1*z + b0);
+
+figure;
+plot(real(w),imag(w))
+title(tstr)
+</pre><img vspace="5" hspace="5" src="P18_01.png" alt=""> <h2 id="5">Part D</h2><pre class="codeinput">x = zeros(4,N);
+u = x;
+f = x;
+x(:,1) = [1 1 1 1];
+
+k=1;
+f(1,k) = -244*10^-6*x(1,k) - 1668*x(2,k) + 1.667*x(3,k) - 8.332*x(4,k);
+f(2,k) = -321*x(2,k) + 320*x(3,k) - 1679*x(4,k);
+f(3,k) = 79*x(2,k) - 80*x(3,k) - 79*x(4,k);
+f(4,k) = -320*x(2,k) + 320*x(3,k) - 1680*x(4,k);
+
+x(:,2)=x(:,1)+T*f(:,1);
+
+<span class="keyword">for</span> k=2:N-1
+    f(1,k) = -244*10^-6*x(1,k) - 1668*x(2,k) + 1.667*x(3,k) - 8.332*x(4,k);
+    f(2,k) = -321*x(2,k) + 320*x(3,k) - 1679*x(4,k);
+    f(3,k) = 79*x(2,k) - 80*x(3,k) - 79*x(4,k);
+    f(4,k) = -320*x(2,k) + 320*x(3,k) - 1680*x(4,k);
+
+    x(:,k+1) = T*b1*f(:,k) + T*b0*f(:,k-1) - a1*x(:,k) - a0*x(:,k-1);
+
+<span class="keyword">end</span>
+
+figure;
+subplot(4,1,1)
+plot(t,x(1,:))
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_1'</span>)
+title(tstr)
+
+subplot(4,1,2)
+plot(t,x(2,:))
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_2'</span>)
+title(tstr)
+
+subplot(4,1,3)
+plot(t,x(3,:))
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_3'</span>)
+title(tstr)
+
+subplot(4,1,4)
+plot(t,x(4,:))
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_4'</span>)
+title(tstr)
+</pre><img vspace="5" hspace="5" src="P18_02.png" alt=""> <h2 id="6">Part E</h2><pre class="codeinput">J = [-244*10^-6 -1668 1.667 -8.332; 0 -321 320 -1679; 0 79 -80 -79; 0 -320 320 -1680];
+x0 = [1;1;1;1];
+
+tfinal = 0.15;
+T = 0.02;
+Teul=0.00002;
+t = [0:T:tfinal];
+te=[0:Teul:tfinal];
+N = length(t);
+Ne=length(te);
+
+exJ = expm(J*T)
+[junk,nn] = size(J);
+
+A1 = (exJ-eye(nn))*inv(J*T)-2*eye(nn)
+A0 = -eye(nn)-A1
+B1 = (A1+exJ)*inv(J*T)
+B0 = (A0)*inv(J*T)
+</pre><pre class="codeoutput">
+exJ =
+
+    1.0000  -30.3646   -2.6309   29.5264
+         0    0.9465    0.0336   -0.9465
+         0    0.7783    0.2019   -0.7783
+         0   -0.0336    0.0336    0.0336
+
+
+A1 =
+
+   -1.0000  -14.9491   -1.6037   14.1319
+         0   -1.0889    0.0790   -0.8861
+         0    0.4913   -1.5012   -0.4913
+         0   -0.0790    0.0790   -1.8960
+
+
+A0 =
+
+    0.0000   14.9491    1.6037  -14.1319
+         0    0.0889   -0.0790    0.8861
+         0   -0.4913    0.5012    0.4913
+         0    0.0790   -0.0790    0.8960
+
+
+B1 =
+
+    1.5000  -19.8768   -2.1855   18.6610
+         0    1.3596    0.1271   -1.3103
+         0    0.6747    0.8121   -0.6747
+         0   -0.1271    0.1271    0.1765
+
+
+B0 =
+
+   -0.5000    4.9277    0.5819   -4.5291
+         0   -0.4485   -0.0481    0.4242
+         0   -0.1834   -0.3132    0.1834
+         0    0.0481   -0.0481   -0.0725
+
+</pre><h2 id="7">Part F</h2><pre class="codeinput">x = zeros(nn,N);
+f = x;
+xe=zeros(nn,Ne);
+fe=xe;
+x(:,1) = x0;
+xe(:,1)=x(:,1);
+
+<span class="keyword">for</span> k=1:Ne-1
+    fe(:,k)=J*xe(:,k);
+    xe(:,k+1)=xe(:,k)+Teul*fe(:,k);
+<span class="keyword">end</span>
+
+f(:,1) = J*x(:,1);
+x(:,2) = x(:,1)+T*f(:,1);
+<span class="keyword">for</span> k=1:N-2
+    f(:,k+1) = J*x(:,k+1);
+    x(:,k+2) = -A1*x(:,k+1)-A0*x(:,k)+T*B1*f(:,k+1)+T*B0*f(:,k);
+<span class="keyword">end</span>
+
+figure;
+subplot(4,1,1)
+plot(te,xe(1,:),<span class="string">'b'</span>)
+hold <span class="string">on</span>
+stairs(t,x(1,:),<span class="string">'r'</span>)
+hold <span class="string">off</span>
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_1'</span>)
+
+
+subplot(4,1,2);
+plot(te,xe(2,:),<span class="string">'b'</span>)
+hold <span class="string">on</span>
+stairs(t,x(2,:),<span class="string">'r'</span>)
+hold <span class="string">off</span>
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_2'</span>)
+
+subplot(4,1,3);
+plot(te,xe(3,:),<span class="string">'b'</span>)
+hold <span class="string">on</span>
+stairs(t,x(3,:),<span class="string">'r'</span>)
+hold <span class="string">off</span>
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_3'</span>)
+
+subplot(4,1,4);
+plot(te,xe(4,:),<span class="string">'b'</span>)
+hold <span class="string">on</span>
+stairs(t,x(4,:),<span class="string">'r'</span>)
+hold <span class="string">off</span>
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x_4'</span>)
+</pre><img vspace="5" hspace="5" src="P18_03.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Tyler Matthews
+%P18
+
+clc; close all; clear all; %Clear console, clear workspace, close figures
+
+A = [-244*10^-6 -1668 1.667 -8.332; 0 -321 320 -1679; 0 79 -80 -79; 0 -320 320 -1680];
+B = [8;3;7;2];
+x0 = [1;1;1;1];
+
+%% Part A
+eigen = eig(A)
+disp('Stiffness Ratio = 2000')
+
+%% Part B
+T = 0.02;
+tfinal = 5;
+t = [0:T:tfinal];
+N = length(t);
+
+LT = eigen(2)*T;
+Am = [0 1 0 -LT; 1 0 -LT 0; 1 1 0 0; 0 1 -1 -1];
+Bm = [-exp(LT);0;-1;-2];
+Xm = inv(Am)*Bm;
+a0 = Xm(1)
+a1 = Xm(2)
+b0 = Xm(3)
+b1 = Xm(4)
+srpstr=['SRP-2-',num2str(abs(LT))];
+tstr=['Simulation using ',srpstr,' and T=',num2str(T)];
+
+%% Part C
+theta=linspace(0,2*pi,1001);
+z = 1*exp(theta*i);
+w = (z.^2 + a1*z +a0)./(b1*z + b0);
+
+figure;
+plot(real(w),imag(w))
+title(tstr)
+
+%% Part D
+x = zeros(4,N);
+u = x;
+f = x;
+x(:,1) = [1 1 1 1];
+
+k=1;
+f(1,k) = -244*10^-6*x(1,k) - 1668*x(2,k) + 1.667*x(3,k) - 8.332*x(4,k);
+f(2,k) = -321*x(2,k) + 320*x(3,k) - 1679*x(4,k);
+f(3,k) = 79*x(2,k) - 80*x(3,k) - 79*x(4,k);
+f(4,k) = -320*x(2,k) + 320*x(3,k) - 1680*x(4,k);
+
+x(:,2)=x(:,1)+T*f(:,1);
+
+for k=2:N-1
+    f(1,k) = -244*10^-6*x(1,k) - 1668*x(2,k) + 1.667*x(3,k) - 8.332*x(4,k);
+    f(2,k) = -321*x(2,k) + 320*x(3,k) - 1679*x(4,k);
+    f(3,k) = 79*x(2,k) - 80*x(3,k) - 79*x(4,k);
+    f(4,k) = -320*x(2,k) + 320*x(3,k) - 1680*x(4,k);
+    
+    x(:,k+1) = T*b1*f(:,k) + T*b0*f(:,k-1) - a1*x(:,k) - a0*x(:,k-1);
+    
+end
+
+figure;
+subplot(4,1,1)
+plot(t,x(1,:))
+xlabel('t')
+ylabel('x_1')
+title(tstr)
+
+subplot(4,1,2)
+plot(t,x(2,:))
+xlabel('t')
+ylabel('x_2')
+title(tstr)
+
+subplot(4,1,3)
+plot(t,x(3,:))
+xlabel('t')
+ylabel('x_3')
+title(tstr)
+
+subplot(4,1,4)
+plot(t,x(4,:))
+xlabel('t')
+ylabel('x_4')
+title(tstr)
+
+%% Part E
+J = [-244*10^-6 -1668 1.667 -8.332; 0 -321 320 -1679; 0 79 -80 -79; 0 -320 320 -1680];
+x0 = [1;1;1;1];
+
+tfinal = 0.15;
+T = 0.02;
+Teul=0.00002;
+t = [0:T:tfinal];
+te=[0:Teul:tfinal];
+N = length(t);
+Ne=length(te);
+
+exJ = expm(J*T)
+[junk,nn] = size(J);
+
+A1 = (exJ-eye(nn))*inv(J*T)-2*eye(nn)
+A0 = -eye(nn)-A1
+B1 = (A1+exJ)*inv(J*T)
+B0 = (A0)*inv(J*T)
+
+%% Part F
+x = zeros(nn,N);
+f = x;
+xe=zeros(nn,Ne);
+fe=xe;
+x(:,1) = x0;
+xe(:,1)=x(:,1);
+
+for k=1:Ne-1
+    fe(:,k)=J*xe(:,k);
+    xe(:,k+1)=xe(:,k)+Teul*fe(:,k);
+end
+
+f(:,1) = J*x(:,1);
+x(:,2) = x(:,1)+T*f(:,1);
+for k=1:N-2
+    f(:,k+1) = J*x(:,k+1);
+    x(:,k+2) = -A1*x(:,k+1)-A0*x(:,k)+T*B1*f(:,k+1)+T*B0*f(:,k);
+end
+
+figure;
+subplot(4,1,1)
+plot(te,xe(1,:),'b')
+hold on
+stairs(t,x(1,:),'r')
+hold off
+xlabel('t')
+ylabel('x_1')
+
+
+subplot(4,1,2);
+plot(te,xe(2,:),'b')
+hold on
+stairs(t,x(2,:),'r')
+hold off
+xlabel('t')
+ylabel('x_2')
+
+subplot(4,1,3);
+plot(te,xe(3,:),'b')
+hold on
+stairs(t,x(3,:),'r')
+hold off
+xlabel('t')
+ylabel('x_3')
+
+subplot(4,1,4);
+plot(te,xe(4,:),'b')
+hold on
+stairs(t,x(4,:),'r')
+hold off
+xlabel('t')
+ylabel('x_4')
+##### SOURCE END #####
+--></body></html>
