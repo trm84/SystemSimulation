@@ -1,0 +1,370 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P3</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-05-02"><meta name="DC.source" content="P3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Tyler Matthews</span>
+<span class="comment">%System Simulation Final</span>
+<span class="comment">%P3</span>
+
+clc; clear <span class="string">all</span>; close <span class="string">all</span>;
+
+<span class="comment">% Model Parameters</span>
+numDays = 1000;
+T = 0.5;
+t = linspace(1,numDays,numDays);
+
+alpha = 0.005;
+beta = 0.0055;
+zeta = 0.5;
+delta = 0.001;
+rho = 0.5;
+c = 0.002;
+p = 0.001;
+
+Towns = [<span class="string">"Middletown"</span>, <span class="string">"Akron"</span>, <span class="string">"Canal Fulton"</span>, <span class="string">"Cleveland"</span>, <span class="string">"Columbus"</span>];
+Populations = [97.5, 197.859, 5.479, 389.521, 835.957];
+
+hArr = [zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays)];
+zArr = [zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays)];
+figure;
+<span class="keyword">for</span> index = 1:5
+   disp(Towns(index))
+   disp(Populations(index))
+
+<span class="comment">   %{
+</span><span class="comment">    Predict  - Tried Euler &amp; AB2 -&gt; caused unwanted noise
+</span><span class="comment">    xp(k+1) = xc(k) + T*fxc(k); %x(n+1) = x(n) + T*x'(n)
+</span><span class="comment">    yp(k+1) = yc(k) + T*fyc(k);
+</span><span class="comment">    zp(k+1) = zc(k) + T*fzc(k);
+</span><span class="comment">   %}
+</span>
+    S = zeros(1,numDays); <span class="comment">% Suceptable Humans</span>
+    I = zeros(1,numDays); <span class="comment">% Infected Group</span>
+    Z = zeros(1,numDays); <span class="comment">% Zombies</span>
+    R = zeros(1,numDays); <span class="comment">% Raise-able</span>
+    K = zeros(1,numDays); <span class="comment">% Unable to be re-animated</span>
+
+    S(1)= Populations(index); <span class="comment">%Intial Population</span>
+    <span class="keyword">for</span> k = 1:numDays-1
+        SK1 = p*S(k) - beta*Z(k)*S(k) - delta*S(k) + c*Z(k);
+        IK1 = beta*Z(k)*S(k) - rho*I(k) - delta*I(k);
+        ZK1 = rho*I(k) + zeta*R(k) - alpha*S(k)*Z(k) - c*Z(k);
+        RK1 = delta*S(k) - zeta*R(k);
+        KK1 = delta*I(k) + alpha*S(k)*Z(k);
+
+        MS1 = S(k) + (T/2)*SK1;
+        MI1 = I(k) + (T/2)*IK1;
+        MZ1 = Z(k) + (T/2)*ZK1;
+        MR1 = R(k) + (T/2)*RK1;
+        MK1 = K(k) + (T/2)*KK1;
+
+        SK2 = p*MS1-beta*MZ1*MS1-delta*MS1+c*MZ1;
+        IK2 = beta*MZ1*MS1-rho*MI1-delta*MI1;
+        ZK2 = rho*MI1+zeta*MR1-alpha*MS1*MZ1-c*MZ1;
+        RK2 = delta*MS1-zeta*MR1;
+        KK2 = delta*MI1+alpha*MS1*MZ1;
+
+        MS2 = S(k)+(T/2)*SK2;
+        MI2 = I(k)+(T/2)*IK2;
+        MZ2 = Z(k)+(T/2)*ZK2;
+        MR2 = R(k)+(T/2)*RK2;
+        MK2 = K(k)+(T/2)*KK2;
+
+        SK3 = p*MS2-beta*MZ2*MS2-delta*MS2+c*MZ2;
+        IK3 = beta*MZ2*MS2-rho*MI2-delta*MI2;
+        ZK3 = rho*MI2+zeta*MR2-alpha*MS2*MZ2-c*MZ2;
+        RK3 = delta*MS2-zeta*MR2;
+        KK3 = delta*MI2+alpha*MS2*MZ2;
+
+        MS3 = S(k)+(T)*SK3;
+        MI3 = I(k)+(T)*IK3;
+        MZ3 = Z(k)+(T)*ZK3;
+        MR3 = R(k)+(T)*RK3;
+        MK3 = K(k)+(T)*KK3;
+
+        SK4 = p*MS3-beta*MZ3*MS3-delta*MS3+c*MZ3;
+        IK4 = beta*MZ3*MS3-rho*MI3-delta*MI3;
+        ZK4 = rho*MI3+zeta*MR3-alpha*MS3*MZ3-c*MZ3;
+        RK4 = delta*MS3-zeta*MR3;
+        KK4 = delta*MI3+alpha*MS3*MZ3;
+
+        S(k+1) = S(k)+(T/6)*(SK1 + 2*SK2 + 2*SK3 + SK4);
+        I(k+1) = I(k)+(T/6)*(IK1 + 2*IK2 + 2*IK3 + IK4);
+        Z(k+1) = Z(k)+(T/6)*(ZK1 + 2*ZK2 + 2*ZK3 + ZK4);
+        R(k+1) = R(k)+(T/6)*(RK1 + 2*RK2 + 2*RK3 + RK4);
+        K(k+1) = K(k)+(T/6)*(KK1 + 2*KK2 + 2*KK3 + KK4);
+    <span class="keyword">end</span>
+    zArr(index,:) = Z;
+    hArr(index,:) = S;
+    subplot(3,2,index)
+    hold <span class="string">on</span>
+    plot(t,S)
+    plot(t,Z)
+    plot(t,I)
+    plot(t,R)
+    legend(<span class="string">'Humans'</span>, <span class="string">'Zombies'</span>, <span class="string">'Infected'</span>, <span class="string">'Raiseable'</span>)
+    xlim([1,numDays])
+    grid <span class="string">on</span>
+    xlabel(<span class="string">'Days'</span>)
+    ylabel(<span class="string">'Population'</span>)
+    plotTitle = <span class="string">'Zombie Outbreak: '</span> + Towns(index);
+    title(plotTitle)
+    hold <span class="string">off</span>
+<span class="keyword">end</span>
+
+
+figure;
+subplot(2,1,1)
+hold <span class="string">on</span>
+grid <span class="string">on</span>
+plot(t,hArr(1,:))
+plot(t,hArr(2,:))
+plot(t,hArr(3,:))
+plot(t,hArr(4,:))
+plot(t,hArr(5,:))
+title(<span class="string">'Human Populations'</span>)
+legend(<span class="string">'Middletown'</span>,<span class="string">'Akron'</span>,<span class="string">'Canal Fulton'</span>,<span class="string">'Cleveland'</span>,<span class="string">'Columbus'</span>)
+xlabel(<span class="string">'Days'</span>)
+ylabel(<span class="string">'Population'</span>)
+xlim([1,numDays])
+hold <span class="string">off</span>
+
+subplot(2,1,2);
+hold <span class="string">on</span>
+grid <span class="string">on</span>
+plot(t,zArr(1,:))
+plot(t,zArr(2,:))
+plot(t,zArr(3,:))
+plot(t,zArr(4,:))
+plot(t,zArr(5,:))
+title(<span class="string">'Zombie Populations'</span>)
+legend(<span class="string">'Middletown'</span>,<span class="string">'Akron'</span>,<span class="string">'Canal Fulton'</span>,<span class="string">'Cleveland'</span>,<span class="string">'Columbus'</span>)
+xlabel(<span class="string">'Days'</span>)
+ylabel(<span class="string">'Population'</span>)
+xlim([1,numDays])
+hold <span class="string">off</span>
+</pre><pre class="codeoutput">Middletown
+   97.5000
+
+Akron
+  197.8590
+
+Canal Fulton
+    5.4790
+
+Cleveland
+  389.5210
+
+Columbus
+  835.9570
+
+</pre><img vspace="5" hspace="5" src="P3_01.png" alt=""> <img vspace="5" hspace="5" src="P3_02.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Tyler Matthews
+%System Simulation Final
+%P3
+
+clc; clear all; close all;
+
+% Model Parameters
+numDays = 1000;
+T = 0.5;
+t = linspace(1,numDays,numDays);
+
+alpha = 0.005;
+beta = 0.0055;
+zeta = 0.5;
+delta = 0.001;
+rho = 0.5;
+c = 0.002;
+p = 0.001;
+
+Towns = ["Middletown", "Akron", "Canal Fulton", "Cleveland", "Columbus"];
+Populations = [97.5, 197.859, 5.479, 389.521, 835.957];
+
+hArr = [zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays)];
+zArr = [zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays); zeros(1,numDays)];
+figure;
+for index = 1:5
+   disp(Towns(index))
+   disp(Populations(index))
+   
+   %{
+    Predict  - Tried Euler & AB2 -> caused unwanted noise
+    xp(k+1) = xc(k) + T*fxc(k); %x(n+1) = x(n) + T*x'(n)
+    yp(k+1) = yc(k) + T*fyc(k);
+    zp(k+1) = zc(k) + T*fzc(k);
+   %}
+   
+    S = zeros(1,numDays); % Suceptable Humans
+    I = zeros(1,numDays); % Infected Group
+    Z = zeros(1,numDays); % Zombies
+    R = zeros(1,numDays); % Raise-able
+    K = zeros(1,numDays); % Unable to be re-animated
+
+    S(1)= Populations(index); %Intial Population
+    for k = 1:numDays-1
+        SK1 = p*S(k) - beta*Z(k)*S(k) - delta*S(k) + c*Z(k);
+        IK1 = beta*Z(k)*S(k) - rho*I(k) - delta*I(k);
+        ZK1 = rho*I(k) + zeta*R(k) - alpha*S(k)*Z(k) - c*Z(k);
+        RK1 = delta*S(k) - zeta*R(k);
+        KK1 = delta*I(k) + alpha*S(k)*Z(k);
+
+        MS1 = S(k) + (T/2)*SK1;
+        MI1 = I(k) + (T/2)*IK1;
+        MZ1 = Z(k) + (T/2)*ZK1;
+        MR1 = R(k) + (T/2)*RK1;    
+        MK1 = K(k) + (T/2)*KK1;
+
+        SK2 = p*MS1-beta*MZ1*MS1-delta*MS1+c*MZ1;
+        IK2 = beta*MZ1*MS1-rho*MI1-delta*MI1;
+        ZK2 = rho*MI1+zeta*MR1-alpha*MS1*MZ1-c*MZ1;
+        RK2 = delta*MS1-zeta*MR1;
+        KK2 = delta*MI1+alpha*MS1*MZ1;
+
+        MS2 = S(k)+(T/2)*SK2;
+        MI2 = I(k)+(T/2)*IK2;
+        MZ2 = Z(k)+(T/2)*ZK2;
+        MR2 = R(k)+(T/2)*RK2;    
+        MK2 = K(k)+(T/2)*KK2;
+
+        SK3 = p*MS2-beta*MZ2*MS2-delta*MS2+c*MZ2;
+        IK3 = beta*MZ2*MS2-rho*MI2-delta*MI2;
+        ZK3 = rho*MI2+zeta*MR2-alpha*MS2*MZ2-c*MZ2;
+        RK3 = delta*MS2-zeta*MR2;
+        KK3 = delta*MI2+alpha*MS2*MZ2;
+
+        MS3 = S(k)+(T)*SK3;
+        MI3 = I(k)+(T)*IK3;
+        MZ3 = Z(k)+(T)*ZK3;
+        MR3 = R(k)+(T)*RK3;    
+        MK3 = K(k)+(T)*KK3;
+
+        SK4 = p*MS3-beta*MZ3*MS3-delta*MS3+c*MZ3;
+        IK4 = beta*MZ3*MS3-rho*MI3-delta*MI3;
+        ZK4 = rho*MI3+zeta*MR3-alpha*MS3*MZ3-c*MZ3;
+        RK4 = delta*MS3-zeta*MR3;
+        KK4 = delta*MI3+alpha*MS3*MZ3;
+
+        S(k+1) = S(k)+(T/6)*(SK1 + 2*SK2 + 2*SK3 + SK4);
+        I(k+1) = I(k)+(T/6)*(IK1 + 2*IK2 + 2*IK3 + IK4);
+        Z(k+1) = Z(k)+(T/6)*(ZK1 + 2*ZK2 + 2*ZK3 + ZK4);
+        R(k+1) = R(k)+(T/6)*(RK1 + 2*RK2 + 2*RK3 + RK4);
+        K(k+1) = K(k)+(T/6)*(KK1 + 2*KK2 + 2*KK3 + KK4);
+    end
+    zArr(index,:) = Z;
+    hArr(index,:) = S;
+    subplot(3,2,index)
+    hold on
+    plot(t,S)
+    plot(t,Z)
+    plot(t,I)
+    plot(t,R)
+    legend('Humans', 'Zombies', 'Infected', 'Raiseable')
+    xlim([1,numDays])
+    grid on   
+    xlabel('Days')
+    ylabel('Population')
+    plotTitle = 'Zombie Outbreak: ' + Towns(index);
+    title(plotTitle)
+    hold off
+end
+
+
+figure;
+subplot(2,1,1)
+hold on
+grid on
+plot(t,hArr(1,:))
+plot(t,hArr(2,:))
+plot(t,hArr(3,:))
+plot(t,hArr(4,:))
+plot(t,hArr(5,:))
+title('Human Populations')
+legend('Middletown','Akron','Canal Fulton','Cleveland','Columbus')
+xlabel('Days')
+ylabel('Population')
+xlim([1,numDays])
+hold off
+
+subplot(2,1,2);
+hold on
+grid on
+plot(t,zArr(1,:))
+plot(t,zArr(2,:))
+plot(t,zArr(3,:))
+plot(t,zArr(4,:))
+plot(t,zArr(5,:))
+title('Zombie Populations')
+legend('Middletown','Akron','Canal Fulton','Cleveland','Columbus')
+xlabel('Days')
+ylabel('Population')
+xlim([1,numDays])
+hold off
+
+##### SOURCE END #####
+--></body></html>
