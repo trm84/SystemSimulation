@@ -1,0 +1,327 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>pendulum</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-05-07"><meta name="DC.source" content="pendulum.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Tyler Matthews</span>
+<span class="comment">% Pendulum Simulation / Animation</span>
+clc; close <span class="string">all</span>; clear <span class="string">all</span>;
+
+startTime = 0;
+stopTime = 5;
+steps = 1000;
+
+t = linspace(startTime,stopTime,steps);
+T = stopTime/steps;
+
+<span class="comment">%Initialize</span>
+theta = zeros(1, steps); <span class="comment">%theta</span>
+omega = zeros(1, steps); <span class="comment">%omega = dtheta/dt</span>
+
+theta(1) = pi/4;    <span class="comment">% starting position (degrees)</span>
+omega(1) = 0;       <span class="comment">% starting velocity (degress / second)</span>
+b = 1;              <span class="comment">% damping factor (g/s)</span>
+m = 3;              <span class="comment">% mass (kg)</span>
+g = 9.8;            <span class="comment">% gravitational constant (m/ms^2)</span>
+l = 7;              <span class="comment">% pendulum length (meters)</span>
+
+xStartPoint = l;        <span class="comment">% Sets the x anchored point of the pendulum</span>
+yStartPoint = 1.5*l;    <span class="comment">% Sets the y anchored point of the pendulum</span>
+
+<span class="comment">%inital plot</span>
+    x_pos = l*sin(theta(1));
+    y_pos = l*cos(theta(1));
+
+<span class="comment">%Array to trace the pendulum</span>
+    posArr = [zeros(1, length(t)); zeros(1, length(t))];
+    posArr(1,1) = x_pos;
+    posArr(1,2) = y_pos;
+    index = 1;
+
+<span class="comment">    %{
+</span><span class="comment">    Single pendulum without damping: theta'' = -g/l*sin(theta)
+</span><span class="comment">    Single pendulum with damping:    theta'' = -b/m*theta' + -g/l*sin(theta)
+</span><span class="comment">    %}
+</span>
+<span class="comment">% pendulum without damping usign degrees instead of radians</span>
+<span class="comment">%{
+</span><span class="comment">for k=2:steps
+</span><span class="comment">   %Runge Kutta Method
+</span><span class="comment">   x11 = T *omega(k-1);
+</span><span class="comment">   x21 = T *(-g/l)*(sind(theta(k-1)));
+</span><span class="comment">
+</span><span class="comment">   x12 = T *(omega(k-1) + 0.5*x21);
+</span><span class="comment">   x22 = T *(-g/l)*(sind(theta(k-1) + 0.5*x11));
+</span><span class="comment">
+</span><span class="comment">   x13 = T *(omega(k-1) + 0.5*x22);
+</span><span class="comment">   x23 = T *(-g/l)*(sind(theta(k-1) + 0.5*x12));
+</span><span class="comment">
+</span><span class="comment">   x14 = T *(omega(k-1) + x23);
+</span><span class="comment">   x24 = T *(-g/l)*(sind(theta(k-1) + x13));
+</span><span class="comment">
+</span><span class="comment">   theta(k) = theta(k-1) + x11 + 2*x12 + 2*x13 + x14;
+</span><span class="comment">   omega(k) = omega(k-1) + x21 + 2*x22 + 2*x23 + x24;
+</span><span class="comment">
+</span><span class="comment">
+</span><span class="comment">   % PLOTTING
+</span><span class="comment">   x_pos = l*sind(theta(k));
+</span><span class="comment">   y_pos = l*cosd(theta(k));
+</span><span class="comment">   %plot([x1, x2], [y1, y2])
+</span><span class="comment">   plot([5, 5 - x_pos],[10, 10 - y_pos]);
+</span><span class="comment">   xlim([0,10]);
+</span><span class="comment">   ylim([0,10]);
+</span><span class="comment">
+</span><span class="comment">   % ANIMATE
+</span><span class="comment">   if(mod(k,10) == 0)
+</span><span class="comment">       pause(0.01)
+</span><span class="comment">       disp(k)
+</span><span class="comment">   end
+</span><span class="comment">end
+</span><span class="comment">%}
+</span>
+
+
+figure;
+<span class="comment">%single pedulum with damping</span>
+<span class="keyword">for</span> k=2:steps
+   <span class="comment">%Runge Kutta Method</span>
+   thetaOmega = rkCalculator(theta, omega, T, g, l, k, b, m);
+   theta(k) = thetaOmega(1);
+   omega(k) = thetaOmega(2);
+
+
+   <span class="comment">% PLOTTING</span>
+   <span class="comment">% Current Position</span>
+   x_pos = l*sin(theta(k));
+   y_pos = l*cos(theta(k));
+
+   <span class="comment">% Adding to tracing array</span>
+   posArr(1, index) = x_pos;
+   posArr(2, index) = y_pos;
+
+   <span class="keyword">if</span>(index &gt;= length(posArr))
+        index = 1;
+   <span class="keyword">else</span>
+        index = index + 1;
+   <span class="keyword">end</span>
+
+   clf;
+   hold <span class="string">on</span>
+       <span class="keyword">if</span>(k*T&lt;=1)
+           plot(xStartPoint - posArr(1,1:k), yStartPoint - posArr(2,1:k))
+       <span class="keyword">else</span>
+           plot(xStartPoint - posArr(1,k-(1/T):k), yStartPoint - posArr(2,k-(1/T):k))
+       <span class="keyword">end</span>
+
+       plot([xStartPoint, xStartPoint - x_pos],[yStartPoint, yStartPoint - y_pos], <span class="string">'black'</span>);
+       th = 0:pi/50:2*pi;
+       circleX = l/20 * cos(th) + xStartPoint-x_pos;
+       circleY = l/20 * sin(th) + yStartPoint-y_pos;
+       plot(circleX, circleY, <span class="string">'b'</span>);
+       fill(circleX, circleY, <span class="string">'g'</span>);
+       colormap(summer);
+   hold <span class="string">off</span>
+
+    xlim([0,xStartPoint*2]);
+    ylim([0,yStartPoint]);
+    <span class="comment">% ANIMATE</span>
+   <span class="keyword">if</span>(mod(k,1) == 0)
+        pause(0.01)
+        <span class="comment">%disp(k)</span>
+   <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="pendulum_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Tyler Matthews
+% Pendulum Simulation / Animation
+clc; close all; clear all;
+
+startTime = 0;
+stopTime = 5;
+steps = 1000;
+
+t = linspace(startTime,stopTime,steps);
+T = stopTime/steps;
+
+%Initialize
+theta = zeros(1, steps); %theta 
+omega = zeros(1, steps); %omega = dtheta/dt
+
+theta(1) = pi/4;    % starting position (degrees)
+omega(1) = 0;       % starting velocity (degress / second)
+b = 1;              % damping factor (g/s)
+m = 3;              % mass (kg)
+g = 9.8;            % gravitational constant (m/ms^2)
+l = 7;              % pendulum length (meters)
+
+xStartPoint = l;        % Sets the x anchored point of the pendulum
+yStartPoint = 1.5*l;    % Sets the y anchored point of the pendulum
+
+%inital plot 
+    x_pos = l*sin(theta(1));
+    y_pos = l*cos(theta(1)); 
+
+%Array to trace the pendulum
+    posArr = [zeros(1, length(t)); zeros(1, length(t))];
+    posArr(1,1) = x_pos;
+    posArr(1,2) = y_pos;
+    index = 1;    
+
+    %{
+    Single pendulum without damping: theta'' = -g/l*sin(theta)
+    Single pendulum with damping:    theta'' = -b/m*theta' + -g/l*sin(theta)
+    %}
+
+% pendulum without damping usign degrees instead of radians
+%{
+for k=2:steps
+   %Runge Kutta Method
+   x11 = T *omega(k-1);
+   x21 = T *(-g/l)*(sind(theta(k-1))); 
+   
+   x12 = T *(omega(k-1) + 0.5*x21);
+   x22 = T *(-g/l)*(sind(theta(k-1) + 0.5*x11));
+   
+   x13 = T *(omega(k-1) + 0.5*x22);
+   x23 = T *(-g/l)*(sind(theta(k-1) + 0.5*x12));
+   
+   x14 = T *(omega(k-1) + x23);
+   x24 = T *(-g/l)*(sind(theta(k-1) + x13));
+   
+   theta(k) = theta(k-1) + x11 + 2*x12 + 2*x13 + x14;
+   omega(k) = omega(k-1) + x21 + 2*x22 + 2*x23 + x24;
+   
+    
+   % PLOTTING
+   x_pos = l*sind(theta(k));
+   y_pos = l*cosd(theta(k));
+   %plot([x1, x2], [y1, y2])
+   plot([5, 5 - x_pos],[10, 10 - y_pos]); 
+   xlim([0,10]);
+   ylim([0,10]);
+   
+   % ANIMATE
+   if(mod(k,10) == 0)
+       pause(0.01)
+       disp(k)
+   end
+end
+%}
+
+
+
+figure;
+%single pedulum with damping
+for k=2:steps
+   %Runge Kutta Method  
+   thetaOmega = rkCalculator(theta, omega, T, g, l, k, b, m);
+   theta(k) = thetaOmega(1);
+   omega(k) = thetaOmega(2);
+   
+    
+   % PLOTTING
+   % Current Position
+   x_pos = l*sin(theta(k));
+   y_pos = l*cos(theta(k));
+  
+   % Adding to tracing array
+   posArr(1, index) = x_pos;
+   posArr(2, index) = y_pos;
+   
+   if(index >= length(posArr))
+        index = 1;
+   else
+        index = index + 1;
+   end
+   
+   clf;
+   hold on
+       if(k*T<=1)
+           plot(xStartPoint - posArr(1,1:k), yStartPoint - posArr(2,1:k))
+       else
+           plot(xStartPoint - posArr(1,k-(1/T):k), yStartPoint - posArr(2,k-(1/T):k))
+       end
+       
+       plot([xStartPoint, xStartPoint - x_pos],[yStartPoint, yStartPoint - y_pos], 'black'); 
+       th = 0:pi/50:2*pi;
+       circleX = l/20 * cos(th) + xStartPoint-x_pos;
+       circleY = l/20 * sin(th) + yStartPoint-y_pos;
+       plot(circleX, circleY, 'b');
+       fill(circleX, circleY, 'g');
+       colormap(summer);
+   hold off
+   
+    xlim([0,xStartPoint*2]);
+    ylim([0,yStartPoint]);
+    % ANIMATE
+   if(mod(k,1) == 0)
+        pause(0.01) 
+        %disp(k)
+   end
+end
+
+##### SOURCE END #####
+--></body></html>
